@@ -3,7 +3,6 @@ package fetcher
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -26,15 +25,18 @@ func Fetch(url string) ([]byte, error) {
 	}
 
 	//转码
-	e := determinEncoding(resp.Body)
-	utf8Reader := transform.NewReader(resp.Body, e.NewDecoder())
+	// e := determinEncoding(resp.Body)
+	bodyReader := bufio.NewReader(resp.Body)
+	e := determinEncoding(bodyReader)
+	utf8Reader := transform.NewReader(bodyReader, e.NewDecoder())
 	return ioutil.ReadAll(utf8Reader)
 }
 
 //确定编码
-func determinEncoding(r io.Reader) encoding.Encoding {
-
-	bytes, err := bufio.NewReader(r).Peek(1024)
+// func determinEncoding(r io.Reader) encoding.Encoding {
+// 	bytes, err := bufio.NewReader(r).Peek(1024)
+func determinEncoding(r *bufio.Reader) encoding.Encoding {
+	bytes, err := r.Peek(1024)
 
 	if err != nil {
 		log.Printf("Fetch error: %v", err)
