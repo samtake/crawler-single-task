@@ -26,7 +26,8 @@ func Run(seeds ...Request) {
 		requests = append(requests, parseResult.Requests...)
 
 		for _, item := range parseResult.Items {
-			log.Printf("Got item %v", item)
+			// log.Printf("Got item %v", item)
+			log.Printf("Got item %s", item)
 		}
 
 	}
