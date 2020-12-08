@@ -19,7 +19,6 @@ func Fetch(url string) ([]byte, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("wrong status code: %d", resp.StatusCode)
 	}
