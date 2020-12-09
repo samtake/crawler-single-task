@@ -6,6 +6,7 @@ import (
 
 	"crawler-single-task/engine"
 	"crawler-single-task/model"
+	"log"
 )
 
 var ageRe = regexp.MustCompile(
@@ -88,6 +89,7 @@ func ParseProfile(contents []byte, name string) engine.ParseResult {
 	result := engine.ParseResult{
 		Items: []interface{}{profile},
 	}
+	log.Printf("profile = %s",profile.Name)
 	return result
 }
 

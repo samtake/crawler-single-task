@@ -11,6 +11,16 @@ func Run(seeds ...Request) {
 		requests = append(requests, r)
 	}
 
+	// log.Printf("requests=%v; len(requests)=%v ", requests, len(requests))
+	// return
+	// /*requests=[{http://www.zhenai.com/zhenghun 0x1272b60}]; len(requests)=1 */
+
+	/*
+		requests[0]
+		{http://www.zhenai.com/zhenghun 0x1272b60}
+		Url	   							ParserFunc
+	*/
+
 	for len(requests) > 0 {
 		r := requests[0]
 		requests = requests[1:]
@@ -22,13 +32,15 @@ func Run(seeds ...Request) {
 			continue
 		}
 
+		// log.Printf("body=%s", body)
+
 		parseResult := r.ParserFunc(body)
 		requests = append(requests, parseResult.Requests...)
 
-		for _, item := range parseResult.Items {
-			// log.Printf("Got item %v", item)
-			log.Printf("Got item %s", item)
-		}
+		// for _, item := range parseResult.Items {
+		// 	// log.Printf("Got item %v", item)
+		// 	log.Printf("Got item %s", item)
+		// }
 
 	}
 }
